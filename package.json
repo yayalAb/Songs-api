@@ -1,0 +1,25 @@
+{
+  "name": "song-api",
+  "version": "1.0.0",
+  "description": "song app api with mongodb and express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Yayal",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git remote add origin https://github.com/yayalAb/Songs-api.git"
+  },
+  "keywords": [
+    "songs"
+  ]
+}
