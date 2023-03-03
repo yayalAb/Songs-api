@@ -10,7 +10,7 @@ module.exports = app => {
     router.get("/", songs.findAll);
   
     // Retrieve all published songs
-    router.get("/report", songs.findAllPublished);
+    router.get("/report", songs.findAllStatistic);
   
     // Retrieve a single Song with id
     router.get("/:id", songs.findOne);

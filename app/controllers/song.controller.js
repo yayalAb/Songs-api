@@ -128,8 +128,8 @@ exports.deleteAll = (req, res) => {
       });
   };
 
-// Find all published Songs
-exports.findAllPublished = (req, res) => {
+// Find all Statistic of Songs
+exports.findAllStatistic = (req, res) => {
     Song.find({ published: true })
       .then(data => {
         res.send(data);
