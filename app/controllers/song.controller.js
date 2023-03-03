@@ -92,7 +92,6 @@ exports.update = (req, res) => {
 // Delete a Song with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
-  
     Song.findByIdAndRemove(id)
       .then(data => {
         if (!data) {
@@ -129,12 +128,23 @@ exports.deleteAll = (req, res) => {
   };
 
 // Find all Statistic of Songs
-exports.findAllStatistic = (req, res) => {
-    Song.find({ published: true })
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
+exports.findAllStatistic =  (req, res) => {
+
+  Promise.all([
+    Song.find(),
+    Song.find().distinct('artist'),
+    Song.find().distinct('album'),
+    Song.find().distinct('genere'),
+  ]).then( ([ Allsong, DistnctByartist, DistnctByalbum, DistnctBygenres]) => {
+    const Qury1={
+      Allsong:Allsong.length,
+      DistnctByartist:DistnctByartist.length,
+      DistnctByalbum:DistnctByalbum.length,
+      DistnctBygenres:DistnctBygenres.length,
+    }
+
+    res.send(Qury1);
+  }).catch(err => {
         res.status(500).send({
           message:
             err.message || "Some error occurred while retrieving Song."
