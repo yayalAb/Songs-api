@@ -135,12 +135,43 @@ exports.findAllStatistic =  (req, res) => {
     Song.find().distinct('artist'),
     Song.find().distinct('album'),
     Song.find().distinct('genere'),
-  ]).then( ([ Allsong, DistnctByartist, DistnctByalbum, DistnctBygenres]) => {
+    Song.aggregate([
+      {
+        $group: {
+          _id: '$genere',
+          totaldocs : { $sum : 1 }
+        },
+      }
+    ]),
+    Song.aggregate([
+      {
+        $group: {
+          _id: '$artist',
+          Artists : { $sum : 1 }
+        },
+        $group: {
+          _id: '$album',
+          Album : { $sum : 1 }
+        }
+      }
+    ]),
+    Song.aggregate([
+      {
+        $group: {
+          _id: '$album',
+          Album : { $sum : 1 }
+        }
+      }
+    ])
+  ]).then( ([ Allsong, DistnctByartist, DistnctByalbum, DistnctBygenres,CountByGEnere,query3, SongsInEachAlbum]) => {
     const Qury1={
       Allsong:Allsong.length,
       DistnctByartist:DistnctByartist.length,
       DistnctByalbum:DistnctByalbum.length,
       DistnctBygenres:DistnctBygenres.length,
+      CountByGEnere:CountByGEnere,
+      query3:query3,
+      SongsInEachAlbum:SongsInEachAlbum
     }
 
     res.send(Qury1);
@@ -151,3 +182,4 @@ exports.findAllStatistic =  (req, res) => {
         });
       });
   };
+
