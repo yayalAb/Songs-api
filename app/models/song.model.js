@@ -2,8 +2,9 @@ module.exports = mongoose => {
     var schema = mongoose.Schema(
       {
         title: String,
-        description: String,
-        published: Boolean
+        artist: String,
+        album: String,
+        genere: String
       },
       { timestamps: true }
     );
@@ -14,6 +15,6 @@ module.exports = mongoose => {
       return object;
     });
   
-    const Tutorial = mongoose.model("tutorial", schema);
-    return Tutorial;
+    const Song = mongoose.model("song", schema);
+    return Song;
   };
