@@ -148,12 +148,14 @@ exports.findAllStatistic =  (req, res) => {
         $group: {
           _id: '$artist',
           Artists : { $sum : 1 }
-        },
+        }
+      },
+      {
         $group: {
           _id: '$album',
           Album : { $sum : 1 }
         }
-      }
+      } 
     ]),
     Song.aggregate([
       {

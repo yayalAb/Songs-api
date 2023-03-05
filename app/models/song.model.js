@@ -6,7 +6,7 @@ module.exports = mongoose => {
         album: String,
         genere: String
       },
-      { timestamps: true }
+      { timestamps: false }
     );
   
     schema.method("toJSON", function() {
