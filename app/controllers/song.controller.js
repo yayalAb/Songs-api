@@ -4,6 +4,7 @@ const Song = db.songs;
 // Create and Save a new Song
 exports.create = (req, res) => {
     // Validate request
+    // console.log(req.body);
     if (!req.body.title) {
       res.status(400).send({ message: req.body });
       return;
@@ -146,16 +147,12 @@ exports.findAllStatistic =  (req, res) => {
     Song.aggregate([
       {
         $group: {
-          _id: '$artist',
-          Artists : { $sum : 1 }
-        }
-      },
-      {
-        $group: {
+          _id: '$title',
+          Artists : { $sum : 1 },
           _id: '$album',
-          Album : { $sum : 1 }
+          album : { $sum : 1 }
         }
-      } 
+      }
     ]),
     Song.aggregate([
       {
