@@ -1,4 +1,5 @@
 const express = require("express");
+//Cross-Origin Resource Sharing
 const cors = require("cors");
 
 

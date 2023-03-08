@@ -4,12 +4,10 @@ const Song = db.songs;
 // Create and Save a new Song
 exports.create = (req, res) => {
     // Validate request
-    // console.log(req.body);
-    if (!req.body.title) {
+    if (!req.body.title||!req.body.artist||!req.body.genere) {
       res.status(400).send({ message: req.body });
       return;
     }
-  
     // Create a Song
     const song = new Song({
       title: req.body.title,
@@ -34,17 +32,9 @@ exports.create = (req, res) => {
 
 // Retrieve all Song from the database.
 exports.findAll = (req, res) => {
-    const title = req.query.title;
-    var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
-  
-    Song.find(condition)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving Songs."
+    Song.find()
+      .then(data => { res.send(data);}).catch(err => {res.status(500).send({
+          message: err.message || "Some error occurred while retrieving Songs."
         });
       });
   };
@@ -52,7 +42,6 @@ exports.findAll = (req, res) => {
 // Find a single Song with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
-  
     Song.findById(id)
       .then(data => {
         if (!data)
@@ -74,8 +63,7 @@ exports.update = (req, res) => {
     }
   
     const id = req.params.id;
-  
-    Song.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    Song.findByIdAndUpdate(id, req.body)
       .then(data => {
         if (!data) {
           res.status(404).send({
@@ -130,7 +118,6 @@ exports.deleteAll = (req, res) => {
 
 // Find all Statistic of Songs
 exports.findAllStatistic =  (req, res) => {
-
   Promise.all([
     Song.find(),
     Song.find().distinct('artist'),
@@ -159,9 +146,7 @@ exports.findAllStatistic =  (req, res) => {
         $group: {
           _id: '$album',
           Album : { $sum : 1 }
-        }
-      }
-    ])
+        }} ])
   ]).then( ([ Allsong, DistnctByartist, DistnctByalbum, DistnctBygenres,CountByGEnere,query3, SongsInEachAlbum]) => {
     const Qury1={
       Allsong:Allsong.length,
