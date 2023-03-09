@@ -167,3 +167,18 @@ exports.findAllStatistic =  (req, res) => {
       });
   };
 
+  exports.FilterByGenere = (req, res) => {
+    Song.find()
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving Songs."
+      });
+    });
+
+
+
+  }

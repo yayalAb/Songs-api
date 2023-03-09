@@ -23,6 +23,10 @@ module.exports = app => {
   
     // Delete all songs
     router.delete("/", songs.deleteAll);
+
+    router.get("/filter", songs.FilterByGenere);
+
+    
   
     app.use('/api/songs', router);
   };
